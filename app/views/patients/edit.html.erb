@@ -1,0 +1,29 @@
+<h1>Edit Patient</h1>
+
+<%= form_with scope: :patient, model: @patient, local: true do |form| %>
+
+   <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone %>
+  </p>
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </p>
+  <p>
+    <%= form.label :diagnosis %><br>
+    <%= form.text_field :diagnosis %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Back', '/appointments' %>

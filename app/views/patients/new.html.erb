@@ -1,0 +1,28 @@
+<%= form_with scope: :patients, url: patients_path, local: true do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :phone %><br>
+    <%= form.text_field :phone %>
+  </p>
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </p>
+  <p>
+    <%= form.label :diagnosis %><br>
+    <%= form.text_field :diagnosis %>
+  </p>
+
+  <p>
+   
+    <%= form.hidden_field :user_id, :value => @user %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
