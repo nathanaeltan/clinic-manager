@@ -6,6 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import bootstrapPlugin from "@fullcalendar/bootstrap";
 import axios from "axios";
+import DisplayInfo from "./DisplayInfo"
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import ApptModal from "./ApptModal";
 import "./main.scss";
@@ -26,10 +27,14 @@ export class App extends Component {
       modal: false,
       selectTime: "",
       selectedPatient: "",
+      displayInfo: ""
  
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectPatient=this.selectPatient.bind(this)
+    this.eventClick = this.eventClick.bind(this)
+    this.select = this.select.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
 
@@ -40,7 +45,7 @@ export class App extends Component {
         return {
           title: item.patient.name,
           start: item.time,
-          extendedProps: { phone: item.patient.phone }
+          extendedProps: { phone: item.patient.phone,  email: item.patient.email, diagnosis: item.patient.diagnosis}
         };
       });
       this.setState({ calendarEvents: eventInfo });
@@ -51,47 +56,47 @@ export class App extends Component {
     return (
       <div className="container mt-4">
         
+        <div className="row">
+          <div className="col-9">
+              <FullCalendar
+              defaultView="dayGridMonth"
+              header={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay,list"
+              }}
+              eventTimeFormat={{
+                hour: "numeric",
+                minute: "2-digit",
+                meridiem: true
+              }}
+              selectable="true"
+              selectHelper="true"
+              editable="true"
+              eventLimit="true"
+              themeSystem="standard"
+              eventColor="#D7F0F7"
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                interactionPlugin,
+                listPlugin,
+                bootstrapPlugin
+              ]}
+              ref={this.calendarComponentRef}
+              timeZone="local"
+              events={this.state.calendarEvents}
+              select={this.select}
+              eventClick={this.eventClick}
+            />
+          </div>
+
+          <div className="col-3">
+              <DisplayInfo displayinfo={this.state.displayInfo}/>
+          </div>
+        </div>
         
         
-        <FullCalendar
-          defaultView="dayGridMonth"
-          header={{
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay,list"
-          }}
-          eventTimeFormat={{
-            hour: "numeric",
-            minute: "2-digit",
-            meridiem: true
-          }}
-          selectable="true"
-          selectHelper="true"
-          editable="true"
-          eventLimit="true"
-          themeSystem="standard"
-          eventColor="#D7F0F7"
-          plugins={[
-            dayGridPlugin,
-            timeGridPlugin,
-            interactionPlugin,
-            listPlugin,
-            bootstrapPlugin
-          ]}
-          ref={this.calendarComponentRef}
-          timeZone="local"
-          events={this.state.calendarEvents}
-          select={this.select}
-          eventClick={function(calEvent, jsEvent, view, resourceObj) {
-            alert(
-              "Patient Name: " +
-                calEvent.event.title +
-                "\n Phone: " +
-                calEvent.event.extendedProps.phone
-            );
-           
-          }}
-        />
 
         <ApptModal
           show={this.state.modal}
@@ -100,6 +105,7 @@ export class App extends Component {
           handleSubmit={this.handleSubmit}
           selectpatient={this.selectPatient}
           patients={this.state.patients}
+          selectedpatient={this.state.selectedPatient}
         />
       </div>
     );
@@ -120,11 +126,15 @@ export class App extends Component {
   }
 
 
-  select = (start, end) => {
+  select(start, end){
     this.setState({ modal: true, selectTime: start });
   };
 
-  closeModal = () => {
+  eventClick(calEvent, jsEvent, view, resourceObj){
+    console.log(calEvent.event)
+    this.setState({displayInfo: calEvent.event})
+  }
+  closeModal() {
     console.log("close");
     this.setState({ modal: false });
   };

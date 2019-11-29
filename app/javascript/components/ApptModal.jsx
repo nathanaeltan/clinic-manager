@@ -6,7 +6,7 @@ export class ApptModal extends Component {
     super();
     this.state = {
       search: "",
-      appts: { patient_id: "", time: "" },
+      appts: { patient_id: "", time: "" , name: ""},
       patients: []
     };
   }
@@ -22,8 +22,9 @@ export class ApptModal extends Component {
 
   patientSelect = e => {
     this.state.appts.patient_id = e.target.value
-    this.setState({appts: {patient_id: this.state.appts.patient_id}})
-    console.log(this.state.appts)
+    this.state.appts.name = e.target.innerText
+    this.setState({appts: {patient_id: this.state.appts.patient_id, name: this.state.appts.name}})
+ 
   }
 
   componentDidMount() {
@@ -38,7 +39,6 @@ export class ApptModal extends Component {
   }
 
   render() {
-    // const { id } = this.state.appts;
     let searchFilter = this.state.patients.filter(patient => {
       return patient.name
         .toLowerCase()
@@ -64,36 +64,45 @@ export class ApptModal extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={this.submitHandler}>
-              <input
-                type="text"
-                value={this.state.search}
-                onChange={e => {
-                  this.updateSearch(e);
-                }}
-              />
+              <div className="container">
+                <div className="row">
+                    <div className="col-8">
+                      <form onSubmit={this.submitHandler}>
+                            <input
+                              type="text"
+                              value={this.state.search}
+                              onChange={e => {
+                                this.updateSearch(e);
+                              }}
+                            />
+                            <p>
+                               Patient: {this.state.appts.name}
+                            </p>
+                            <p>
+                              Date:{" "}
+                              {this.props.selectTime
+                                ? this.props.selectTime.startStr.slice(0, 10)
+                                : ""}{" "}
+                              <br />
+                              Time:{" "}
+                              {this.props.selectTime
+                                ? this.props.selectTime.startStr.slice(11, 16)
+                                : ""}
+                             </p>
+                            <button type="submit">Submit</button>
+                       </form>
+                       
+                       
+                    </div>
 
-              {/* <input
-                type="text"
-                name="id"
-                value={id}
-                onChange={this.changeHandler}
-              /> */}
+                    <div className="col-4">
+                       {searchResult}
+                    </div>
 
-              <button type="submit">Submit</button>
-            </form>
-            {searchResult}
-            <p>
-              Date:{" "}
-              {this.props.selectTime
-                ? this.props.selectTime.startStr.slice(0, 10)
-                : ""}{" "}
-              <br />
-              Time:{" "}
-              {this.props.selectTime
-                ? this.props.selectTime.startStr.slice(11, 16)
-                : ""}
-            </p>
+                </div>
+                
+              </div>
+            
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.props.hide}>Close</Button>
