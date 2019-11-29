@@ -45,7 +45,7 @@ export class App extends Component {
         return {
           title: item.patient.name,
           start: item.time,
-          extendedProps: { phone: item.patient.phone,  email: item.patient.email, diagnosis: item.patient.diagnosis}
+          extendedProps: { phone: item.patient.phone,  email: item.patient.email, diagnosis: item.patient.diagnosis, medications: item.patient.medications}
         };
       });
       this.setState({ calendarEvents: eventInfo });

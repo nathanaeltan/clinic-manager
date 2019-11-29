@@ -5,15 +5,41 @@ class AppointmentsController < ApplicationController
 
     def patients
         @patients = Patient.all
-        render :json => @patients
+        
+        respond_to do |format| 
+            format.json {
+                render :json => @patients,
+                include: []
+            }
+          
+            format.html
+          end
+        # @patients = MedicationPatient.all
+        
+        # respond_to do |format|
+        #     format.json {
+        #         render :json => @patients,
+        #         include: [:patient, :medication]
+        #     }
+          
+        #     format.html
+        #   end
+
+       
     end
 
-    def json
+    def allAppts
         @appointments = Appt.all
+        @medPat = MedicationPatient.all
         respond_to do |format|
             format.json {
                 render :json => @appointments,
-                include: [:patient]
+                :include => {
+                    :patient => {
+                        :include => :medications 
+                    }
+                }
+               
             }
           
             format.html
@@ -24,8 +50,6 @@ class AppointmentsController < ApplicationController
           @appt =  Appt.new(appt_params)
           @appt.save
 
-        puts "///////////?REQUESWT AKSJBNASKDNJASDKJBAS " 
-        puts params
     end
 
     private

@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_28_020240) do
+ActiveRecord::Schema.define(version: 2019_11_29_060618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "appt_tests", force: :cascade do |t|
-    t.bigint "appt_id", null: false
-    t.bigint "test_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["appt_id"], name: "index_appt_tests_on_appt_id"
-    t.index ["test_id"], name: "index_appt_tests_on_test_id"
-  end
 
   create_table "appts", force: :cascade do |t|
     t.bigint "patient_id"
@@ -32,19 +23,19 @@ ActiveRecord::Schema.define(version: 2019_11_28_020240) do
     t.index ["patient_id"], name: "index_appts_on_patient_id"
   end
 
+  create_table "medication_patients", force: :cascade do |t|
+    t.bigint "medication_id"
+    t.bigint "patient_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medication_id"], name: "index_medication_patients_on_medication_id"
+    t.index ["patient_id"], name: "index_medication_patients_on_patient_id"
+  end
+
   create_table "medications", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "patient_medications", force: :cascade do |t|
-    t.bigint "patient_id"
-    t.bigint "medication_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["medication_id"], name: "index_patient_medications_on_medication_id"
-    t.index ["patient_id"], name: "index_patient_medications_on_patient_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -76,7 +67,5 @@ ActiveRecord::Schema.define(version: 2019_11_28_020240) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "appt_tests", "appts"
-  add_foreign_key "appt_tests", "tests"
   add_foreign_key "patients", "users"
 end

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get '/appointments' => 'appointments#index'
-  get '/showall' => 'appointments#json'
+  get '/showall' => 'appointments#allAppts'
   get '/allpatients' => 'appointments#patients'
   post '/appts' => 'appointments#create'
   resources :patients  
