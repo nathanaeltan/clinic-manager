@@ -5,24 +5,31 @@ export class ApptModal extends Component {
   constructor() {
     super();
     this.state = {
-      patients: [],
-      appts: { id: "", time: "" }
+      search: "",
+      appts: { patient_id: "", time: "" },
+      patients: []
     };
   }
 
-  changeHandler = e => {
-    this.setState({ appts: { [e.target.name]: e.target.value } });
-  };
+  // changeHandler = e => {
+  //   this.setState({ appts: { [e.target.name]: e.target.value } });
+  // };
 
   submitHandler = e => {
     e.preventDefault();
-    this.props.handleSubmit(this.state.appts.id);
-    
+    this.props.handleSubmit(this.state.appts.patient_id);
   };
+
+  patientSelect = e => {
+    this.state.appts.patient_id = e.target.value
+    this.setState({appts: {patient_id: this.state.appts.patient_id}})
+    console.log(this.state.appts)
+  }
 
   componentDidMount() {
     axios.get("http://localhost:3000/allpatients.json").then(response => {
       this.setState({ patients: response.data });
+      console.log(this.state.patients);
     });
   }
 
@@ -31,8 +38,18 @@ export class ApptModal extends Component {
   }
 
   render() {
-    const { id } = this.state.appts;
-    console.log(this.props.selectTime.startStr);
+    // const { id } = this.state.appts;
+    let searchFilter = this.state.patients.filter(patient => {
+      return patient.name
+        .toLowerCase()
+        .includes(this.state.search.toLowerCase());
+    });
+
+    let searchResult = searchFilter.map(item => {
+      if (this.state.search !== "") {
+        return <li onClick={(e) => this.patientSelect(e)} value ={item.id}>{item.name}</li>;
+      }
+    });
     return (
       <div>
         <Modal
@@ -48,23 +65,24 @@ export class ApptModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.submitHandler}>
-              {/* <input type="text" name="name" value={name} onChange={this.changeHandler}/> */}
               <input
+                type="text"
+                value={this.state.search}
+                onChange={e => {
+                  this.updateSearch(e);
+                }}
+              />
+
+              {/* <input
                 type="text"
                 name="id"
                 value={id}
                 onChange={this.changeHandler}
-              />
-              <input
-                type="text"
-                name="time"
-                value={this.props.selectTime.startStr}
-                onChange={this.changeHandler}
-              />
+              /> */}
 
               <button type="submit">Submit</button>
             </form>
-
+            {searchResult}
             <p>
               Date:{" "}
               {this.props.selectTime

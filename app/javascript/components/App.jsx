@@ -24,10 +24,14 @@ export class App extends Component {
       calendarWeekends: true,
       calendarEvents: [],
       modal: false,
-      selectTime: ""
+      selectTime: "",
+      selectedPatient: "",
+ 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectPatient=this.selectPatient.bind(this)
   }
+
 
   componentDidMount() {
     axios.get("http://localhost:3000/showall.json").then(response => {
@@ -46,6 +50,9 @@ export class App extends Component {
   render() {
     return (
       <div className="container mt-4">
+        
+        
+        
         <FullCalendar
           defaultView="dayGridMonth"
           header={{
@@ -82,7 +89,7 @@ export class App extends Component {
                 "\n Phone: " +
                 calEvent.event.extendedProps.phone
             );
-            console.log(calEvent);
+           
           }}
         />
 
@@ -91,13 +98,14 @@ export class App extends Component {
           hide={this.closeModal}
           selectTime={this.state.selectTime}
           handleSubmit={this.handleSubmit}
+          selectpatient={this.selectPatient}
+          patients={this.state.patients}
         />
       </div>
     );
   }
   handleSubmit(patient_id) {
-    console.log("PATIENT ID: ", patient_id);
-    console.log("TIME OF APPT: ", this.state.selectTime.startStr);
+  
     const data = {
         patient_id: patient_id,
         time: this.state.selectTime.startStr
@@ -105,7 +113,8 @@ export class App extends Component {
     }
     axios.post('http://localhost:3000/appts', data)
     .then(response => {
-      console.log(response)
+      console.log(response.config.data)
+      this.setState({calendarEvents: [...this.state.calendarEvents, response.config.data]})
     })
     .catch(error => console.log(error))
   }
@@ -119,6 +128,11 @@ export class App extends Component {
     console.log("close");
     this.setState({ modal: false });
   };
+
+  selectPatient(e) {
+    this.state.selectedPatient = this.state.patients.filter(patient => patient.name === e.target.innerText)[0]
+    this.setState({selectedPatient: this.state.selectedPatient})
+  }
 }
 
 export default App;
