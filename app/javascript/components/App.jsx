@@ -35,6 +35,7 @@ export class App extends Component {
     this.eventClick = this.eventClick.bind(this)
     this.select = this.select.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.updatedate = this.updatedate.bind(this)
   }
 
 
@@ -45,7 +46,7 @@ export class App extends Component {
         return {
           title: item.patient.name,
           start: item.time,
-          extendedProps: { phone: item.patient.phone,  email: item.patient.email, diagnosis: item.patient.diagnosis, medications: item.patient.medications}
+          extendedProps: { phone: item.patient.phone,  email: item.patient.email, diagnosis: item.patient.diagnosis, medications: item.patient.medications, appt_id: item.id, patient_id: item.patient_id}
         };
       });
       this.setState({ calendarEvents: eventInfo });
@@ -88,6 +89,8 @@ export class App extends Component {
               events={this.state.calendarEvents}
               select={this.select}
               eventClick={this.eventClick}
+              droppable= "true"
+              eventDrop= {this.updatedate}
             />
           </div>
 
@@ -106,6 +109,7 @@ export class App extends Component {
           selectpatient={this.selectPatient}
           patients={this.state.patients}
           selectedpatient={this.state.selectedPatient}
+          eventDrop={this.eventDrop}
         />
       </div>
     );
@@ -128,6 +132,7 @@ export class App extends Component {
 
   select(start, end){
     this.setState({ modal: true, selectTime: start });
+    
   };
 
   eventClick(calEvent, jsEvent, view, resourceObj){
@@ -142,6 +147,24 @@ export class App extends Component {
   selectPatient(e) {
     this.state.selectedPatient = this.state.patients.filter(patient => patient.name === e.target.innerText)[0]
     this.setState({selectedPatient: this.state.selectedPatient})
+  }
+
+  updatedate(event, delta, revertFunc, jsEvent, ui, view) {
+    console.log(event.event.start)
+    const data = {
+      patient_id: event.event.extendedProps.patient_id,
+      time: event.event.start
+    
+  }
+
+  axios.put('http://localhost:3000/appts/' + event.event.extendedProps.appt_id, data)
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
+    console.log(data)
+  });
   }
 }
 

@@ -3,6 +3,8 @@ class AppointmentsController < ApplicationController
     def index
     end
 
+    
+
     def patients
         @patients = Patient.all
         
@@ -50,6 +52,12 @@ class AppointmentsController < ApplicationController
           @appt =  Appt.new(appt_params)
           @appt.save
 
+    end
+
+    def update
+        @appt = Appt.find(params[:id])
+  
+        @appt.update(appt_params)
     end
 
     private

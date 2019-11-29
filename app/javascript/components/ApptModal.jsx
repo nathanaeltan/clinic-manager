@@ -30,7 +30,6 @@ export class ApptModal extends Component {
   componentDidMount() {
     axios.get("http://localhost:3000/allpatients.json").then(response => {
       this.setState({ patients: response.data });
-      console.log(this.state.patients);
     });
   }
 
