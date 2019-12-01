@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'twilio/sms'
   devise_for :users
   
   get '/appointments' => 'appointments#index'
@@ -7,7 +8,9 @@ Rails.application.routes.draw do
   post '/appts' => 'appointments#create'
   # resources :appts
   put '/appts/:id' => 'appointments#update'
-
+  delete '/appts/:id' => 'appointments#destroy'
+  post '/twilio/sms'
+  get '/alltests' => 'appointments#tests'
   resources :patients  
   
 

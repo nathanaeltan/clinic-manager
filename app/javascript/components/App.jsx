@@ -60,7 +60,7 @@ export class App extends Component {
         <div className="row">
           <div className="col-9">
               <FullCalendar
-              defaultView="dayGridMonth"
+              defaultView="list"
               header={{
                 left: "prev,next today",
                 center: "title",
@@ -114,19 +114,27 @@ export class App extends Component {
       </div>
     );
   }
-  handleSubmit(patient_id) {
+  handleSubmit(patient_id, phone) {
   
     const data = {
         patient_id: patient_id,
-        time: this.state.selectTime.startStr
+        time: this.state.selectTime.startStr,
+        phone: phone
       
     }
+    console.log(data)
+    
     axios.post('http://localhost:3000/appts', data)
     .then(response => {
       console.log(response.config.data)
-      this.setState({calendarEvents: [...this.state.calendarEvents, response.config.data]})
+     
+      this.setState(prevState => ({
+        calendarEvents: [...prevState.calendarEvents, data]
+      }))
+      console.log(this.state.calendarEvents)
     })
     .catch(error => console.log(error))
+    
   }
 
 

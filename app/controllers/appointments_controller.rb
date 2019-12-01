@@ -16,23 +16,12 @@ class AppointmentsController < ApplicationController
           
             format.html
           end
-        # @patients = MedicationPatient.all
-        
-        # respond_to do |format|
-        #     format.json {
-        #         render :json => @patients,
-        #         include: [:patient, :medication]
-        #     }
-          
-        #     format.html
-        #   end
-
+       
        
     end
 
     def allAppts
         @appointments = Appt.all
-        @medPat = MedicationPatient.all
         respond_to do |format|
             format.json {
                 render :json => @appointments,
@@ -60,9 +49,21 @@ class AppointmentsController < ApplicationController
         @appt.update(appt_params)
     end
 
+    def destroy
+        @appt = Appt.find(params[:id])
+
+        @appt.destroy
+
+    end
+
+    def tests
+        @tests = Test.all
+        render :json => @tests
+    end
+
     private
 
     def appt_params
-        params.require(:appointment).permit(:patient_id, :time)
+        params.require(:appointment).permit(:patient_id, :time, :phone)
     end
 end

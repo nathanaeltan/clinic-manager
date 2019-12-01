@@ -1,6 +1,8 @@
-<h1>Edit Patient</h1>
 
-<%= form_with scope: :patient, model: @patient, local: true do |form| %>
+
+<div class="container text-center mt-5">
+<h1>Edit Patient</h1>
+    <%= form_with scope: :patient, model: @patient, local: true do |form| %>
 
    <p>
     <%= form.label :name %><br>
@@ -27,3 +29,4 @@
 <% end %>
 
 <%= link_to 'Back', '/appointments' %>
+</div>

@@ -3,3 +3,15 @@
 @import '@fullcalendar/list/main.css';
 @import '@fullcalendar/timegrid/main.css';
 @import '@fullcalendar/bootstrap/main.css';
+
+.fc-title, .fc-time {
+    color: black;
+}
+
+.fc-button {
+    background-color: #049BE5;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}

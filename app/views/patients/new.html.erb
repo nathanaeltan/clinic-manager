@@ -17,8 +17,13 @@
     <%= form.text_field :diagnosis %>
   </p>
 
+
   <p>
-   
+  Medication <br>
+<%= form.select :medication_ids, Medication.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
+
+  </p>
+  <p>
     <%= form.hidden_field :user_id, :value => @user %>
   </p>
 

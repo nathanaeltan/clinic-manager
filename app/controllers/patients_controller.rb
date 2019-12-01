@@ -6,6 +6,7 @@ def index
 end
 def new
     @user = current_user.id
+    @medications = Medication.all
 end
 
 def create
@@ -39,7 +40,7 @@ def update
   end
 private
 def patient2_params
-    params.require(:patients).permit(:name, :phone, :email, :diagnosis, :user_id)
+    params.require(:patients).permit(:name, :phone, :email, :diagnosis, :user_id, :medication_ids => [])
 
 end
 
