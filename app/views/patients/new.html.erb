@@ -1,33 +1,60 @@
-<%= form_with scope: :patients, url: patients_path, local: true do |form| %>
+
+<head>
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+</head>
+<div class="container">
+
+  <%= form_with scope: :patients, url: patients_path, local: true do |form| %>
   <p>
     <%= form.label :name %><br>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, :class => "form-control" %>
   </p>
 
   <p>
     <%= form.label :phone %><br>
-    <%= form.text_field :phone %>
+    <%= form.text_field :phone , :class => "form-control"%>
   </p>
   <p>
     <%= form.label :email %><br>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, :class => "form-control" %>
   </p>
   <p>
     <%= form.label :diagnosis %><br>
-    <%= form.text_field :diagnosis %>
+    <%= form.text_field :diagnosis, :class => "form-control" %>
   </p>
 
 
   <p>
   Medication <br>
-<%= form.select :medication_ids, Medication.all.collect {|x| [x.name, x.id]}, {}, :multiple => true %>
+<%= form.select :medication_ids, Medication.all.collect {|x| [x.name, x.id]}, {class: "form-control selectpicker" }, :multiple => true%>
 
   </p>
+
   <p>
     <%= form.hidden_field :user_id, :value => @user %>
   </p>
+<br>
+<br>
+<br>
+<br>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit :class => "btn btn-primary"%>
   </p>
+
+
+
 <% end %>
+
+
+   
+ <script>
+    $('select').selectpicker({
+      maxOptions: 10
+    });
+    </script>
