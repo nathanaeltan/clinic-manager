@@ -9,7 +9,6 @@ export class DisplayInfo extends Component {
 
         }
     render() {
-        console.log(this.props.displayinfo)
         return (
             <div>
                 <div className="container text-center border">
@@ -35,9 +34,11 @@ export class DisplayInfo extends Component {
     }
 
     handleDelete(e) {
+       
         axios.delete('http://localhost:3000/appts/' + this.props.displayinfo.extendedProps.appt_id)
         .then(response => {
           console.log(response);
+          this.props.deleteEvent(this.props.displayinfo.extendedProps.appt_id)
         })
         .catch(error => {
           console.log(error);

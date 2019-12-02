@@ -36,6 +36,7 @@ export class App extends Component {
     this.select = this.select.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.updatedate = this.updatedate.bind(this)
+    this.deleteEvent = this.deleteEvent.bind(this)
   }
 
 
@@ -96,7 +97,7 @@ export class App extends Component {
           </div>
 
           <div className="col-3">
-              <DisplayInfo displayinfo={this.state.displayInfo}/>
+              <DisplayInfo displayinfo={this.state.displayInfo} deleteEvent={this.deleteEvent}/>
           </div>
         </div>
         
@@ -140,10 +141,20 @@ export class App extends Component {
   }
 
 
+
+deleteEvent(appt_id) {
+  console.log(appt_id)
+  console.log(this.state.calendarEvents)
+  const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id !== appt_id)
+  this.setState({calendarEvents: data})
+}
   select(start, end){
     this.setState({ modal: true, selectTime: start });
     
   };
+
+
+
 
   eventClick(calEvent, jsEvent, view, resourceObj){
     console.log(calEvent.event)
