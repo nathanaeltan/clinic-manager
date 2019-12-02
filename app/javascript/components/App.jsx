@@ -41,7 +41,7 @@ export class App extends Component {
 
   componentDidMount() {
     axios.get("http://localhost:3000/showall.json").then(response => {
-      console.log(response.data);
+    
       let eventInfo = response.data.map(item => {
         return {
           title: item.patient.name,
@@ -54,13 +54,14 @@ export class App extends Component {
   }
   calendarComponentRef = React.createRef();
   render() {
+    console.log(this.state)
     return (
       <div className="container mt-4">
         
         <div className="row">
           <div className="col-9">
               <FullCalendar
-              defaultView="list"
+              defaultView="dayGridMonth"
               header={{
                 left: "prev,next today",
                 center: "title",
@@ -114,8 +115,11 @@ export class App extends Component {
       </div>
     );
   }
-  handleSubmit(patient_id, phone) {
-  
+  handleSubmit(patient_id, phone, name) {
+    const event = {
+      title: name,
+      start: this.state.selectTime.startStr
+    }
     const data = {
         patient_id: patient_id,
         time: this.state.selectTime.startStr,
@@ -128,9 +132,7 @@ export class App extends Component {
     .then(response => {
       console.log(response.config.data)
      
-      this.setState(prevState => ({
-        calendarEvents: [...prevState.calendarEvents, data]
-      }))
+      this.setState({calendarEvents: [...this.state.calendarEvents, event]})
       console.log(this.state.calendarEvents)
     })
     .catch(error => console.log(error))
@@ -154,7 +156,9 @@ export class App extends Component {
 
   selectPatient(e) {
     this.state.selectedPatient = this.state.patients.filter(patient => patient.name === e.target.innerText)[0]
+    
     this.setState({selectedPatient: this.state.selectedPatient})
+   
   }
 
   updatedate(event, delta, revertFunc, jsEvent, ui, view) {

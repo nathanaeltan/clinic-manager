@@ -9,20 +9,20 @@ export class ApptModal extends Component {
     this.state = {
       search: "",
       appts: { patient_id: "", time: "", name: "", phone: "" },
-      patients: [],
-      step: 1
+      patients: []
+    
     };
   }
  
   submitHandler = e => {
     e.preventDefault();
-    const { step } = this.state
     this.props.handleSubmit(
       this.state.appts.patient_id,
-      this.state.appts.phone
+      this.state.appts.phone,
+      this.state.appts.name
     );
-    this.setState({step: step + 1})
-   console.log(this.state.step)
+      this.props.hide
+
   };
 
 
@@ -33,6 +33,7 @@ export class ApptModal extends Component {
     const patient = this.state.patients.find(u => u.id === patientId);
     this.state.appts.phone = patient.phone;
     this.state.appts.name = e.target.innerText;
+    console.log(patient)
     this.setState({
       appts: {
         patient_id: this.state.appts.patient_id,
@@ -40,6 +41,7 @@ export class ApptModal extends Component {
         phone: this.state.appts.phone
       }
     });
+    console.log(this.state.appts)
   };
 
   componentDidMount() {
@@ -68,8 +70,7 @@ export class ApptModal extends Component {
         );
       }
     });
-    console.log(this.state.step)
-    const { step } = this.state
+   
     return (
       <div>
         <Modal
@@ -87,7 +88,7 @@ export class ApptModal extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-8">
-                 { step === 1 ? <ApptForm
+                 {  <ApptForm
                     submitHandler={this.submitHandler}
                     search={this.state.search}
                     updateSearch={e => {
@@ -95,12 +96,13 @@ export class ApptModal extends Component {
                     }}
                     appts={this.state.appts}
                     selectTime={this.props.selectTime}
-                  /> : 
-                  <AddTest />}
+                    hide={this.props.hide}
+                  /> 
+                  }
 
                 </div>
 
-                <div className="col-4">{ step === 1 ? searchResult : null}</div>
+                <div className="col-4">{ searchResult}</div>
               </div>
             </div>
           </Modal.Body>

@@ -22,7 +22,7 @@ export class DisplayInfo extends Component {
                     <p> {this.props.displayinfo.extendedProps === undefined ? "" : this.props.displayinfo.extendedProps.medications.length === 0 ? "" : "Medication"}</p>
                     <ul>    
                          {this.props.displayinfo.extendedProps === undefined ? "" : this.props.displayinfo.extendedProps.medications.map((med, i) => <li key={i}>{med.name}</li>)}
-                         {this.props.displayinfo.extendedProps === undefined ? "" : <button onClick={this.handleDelete} className="btn btn-danger">Delete</button>} 
+                         {this.props.displayinfo.extendedProps === undefined ? "" : <button onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?'))this.handleDelete(e)}} className="btn btn-danger">Delete</button>} 
 
                         
                          {this.props.displayinfo.extendedProps? <a href={"patients/" + this.props.displayinfo.extendedProps.patient_id} className="btn btn-primary ml-2">Edit</a>  : null}

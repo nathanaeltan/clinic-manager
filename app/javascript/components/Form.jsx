@@ -24,7 +24,7 @@ export class Form extends Component {
                                 ? this.props.selectTime.startStr.slice(11, 16)
                                 : ""}
                              </p>
-                            <button type="submit">Next</button>
+                            <button onClick={this.props.hide} type="submit">Add</button>
                        </form>
             </div>
         )

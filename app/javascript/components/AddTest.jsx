@@ -15,11 +15,10 @@ export class AddTest extends Component {
   }
 
   render() {
-      let list = this.state.tests.map(item => <li>{item.name}</li> )
     return (
       <div>
-        <h1>ADD A TEST</h1>
-        {list}
+        <h1>Appointment Added</h1>
+       
       </div>
     );
   }
