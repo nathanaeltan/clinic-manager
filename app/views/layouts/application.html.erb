@@ -3,9 +3,9 @@
   <head>
     <title>ClinicManager</title>
     <%= csrf_meta_tags %>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <%= csp_meta_tag %>
+  <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+   <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
@@ -13,19 +13,33 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">MyClinicManager</a>
+    <% if user_signed_in? %>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <a class="navbar-brand" href="#" style="color:black; font-weight:bold; font-size:1.5rem; ">MyClinicManager</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/appointments">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="/patients/new">Add a Patient</a>
-      <a class="nav-item nav-link" href="/patients">See All Patients</a>
-    </div>
+    <ul class="navbar-nav mr-auto">
+     <li class="nav-item active"><a class="nav-item nav-link active" href="/appointments" style="color:black;">Home <span class="sr-only">(current)</span></a></li> 
+      <li class="nav-item active"><a class="nav-item nav-link active" href="/patients/new" style="color:black;" >Add a Patient</a></li> 
+       <li class="nav-item active"><a class="nav-item nav-link active" href="/patients" style="color:black;">See All Patients</a></li> 
+    </ul>
+  
+    <ul class="navbar-nav ml-auto">
+    
+    <%= link_to 'log out', destroy_user_session_url, method: :delete, :class => "nav-item nav-link active " %>
+    </ul>
+
+      
+   
   </div>
 </nav>
+
+    <% end %>
+
+   
+
     <%= yield %>
 
   

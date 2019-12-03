@@ -1,9 +1,16 @@
-<div class="container text-center">
-<h1> <%= @patient.name %> </h1>
+<div class="container text-center mt-5">
+    <h1 class="border-bottom">Details</h1>
+<h2> Name: <%= @patient.name %> </h2>
     
- <p><%= @patient.phone %></p> 
- <p><%= @patient.email %></p>
- <p><%= @patient.diagnosis %></p> 
+ <p> Phone: <%= @patient.phone %></p> 
+ <p> Email: <%= @patient.email %></p>
+ <p>Diagnosis: <%= @patient.diagnosis %></p> 
+Medication: 
+ <ul class="list-group ">
+ <% @medication.each do |med|%>
+           <li class="list-group-item list-group-item-primary"> <%= med.name %></li>
+ <% end %>
+ </ul>
 
  <%= link_to 'Back to Calendar', '/appointments' %>
 </div>

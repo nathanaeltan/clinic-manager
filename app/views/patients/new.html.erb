@@ -7,33 +7,59 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 </head>
-<div class="container">
+<div class="container border p-4">
 
   <%= form_with scope: :patients, url: patients_path, local: true do |form| %>
-  <p>
+  <div class="form-row">
+  <div class="col-3"></div>
+  <div class="col-6">
     <%= form.label :name %><br>
     <%= form.text_field :name, :class => "form-control" %>
-  </p>
+  </div>
+  <div class="col-3"></div>
 
-  <p>
-    <%= form.label :phone %><br>
+  </div>
+  <div class="form-row">
+  <div class="col-3"></div>
+  <div class="col-6">
+     <%= form.label :phone %><br>
     <%= form.text_field :phone , :class => "form-control"%>
-  </p>
-  <p>
-    <%= form.label :email %><br>
+  </div>
+  <div class="col-3"></div>
+
+  </div>
+  <div class="form-row">
+  <div class="col-3"></div>
+  <div class="col-6">
+     <%= form.label :email %><br>
     <%= form.text_field :email, :class => "form-control" %>
-  </p>
-  <p>
-    <%= form.label :diagnosis %><br>
+  </div>
+  <div class="col-3"></div>
+
+  </div>
+  <div class="form-row">
+  <div class="col-3"></div>
+  <div class="col-6">
+     <%= form.label :diagnosis %><br>
     <%= form.text_field :diagnosis, :class => "form-control" %>
-  </p>
+  </div>
+  <div class="col-3"></div>
 
-
-  <p>
-  Medication <br>
+  </div>
+  <div class="form-row">
+  <div class="col-3"></div>
+  <div class="col-6">
+     <%= form.label :Medications %> <br>
 <%= form.select :medication_ids, Medication.all.collect {|x| [x.name, x.id]}, {class: "form-control selectpicker" }, :multiple => true%>
 
-  </p>
+<div class="">
+  <%= form.submit "Add Patient", :class => 'btn btn-block btn-success mt-4' %>
+</div>
+
+  </div>
+  <div class="col-3"></div>
+  
+  </div>
 
   <p>
     <%= form.hidden_field :user_id, :value => @user %>
@@ -43,9 +69,7 @@
 <br>
 <br>
 
-  <p>
-    <%= form.submit :class => "btn btn-primary"%>
-  </p>
+
 
 
 

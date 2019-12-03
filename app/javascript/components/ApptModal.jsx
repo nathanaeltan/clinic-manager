@@ -8,7 +8,7 @@ export class ApptModal extends Component {
     super();
     this.state = {
       search: "",
-      appts: { patient_id: "", time: "", name: "", phone: "" },
+      appts: { patient_id: "", time: "", name: "", phone: "", email:"", diagnosis: "", medication:"" },
       patients: []
     
     };
@@ -19,7 +19,11 @@ export class ApptModal extends Component {
     this.props.handleSubmit(
       this.state.appts.patient_id,
       this.state.appts.phone,
-      this.state.appts.name
+      this.state.appts.name,
+      this.state.appts.email,
+      this.state.appts.diagnosis,
+      this.state.appts.medication
+
     );
       this.props.hide
 
@@ -33,12 +37,18 @@ export class ApptModal extends Component {
     const patient = this.state.patients.find(u => u.id === patientId);
     this.state.appts.phone = patient.phone;
     this.state.appts.name = e.target.innerText;
-    console.log(patient)
+    this.state.appts.email = patient.email
+    this.state.appts.diagnosis = patient.diagnosis
+    this.state.appts.medication = patient.medications
+    console.log(patient.medications)
     this.setState({
       appts: {
         patient_id: this.state.appts.patient_id,
         name: this.state.appts.name,
-        phone: this.state.appts.phone
+        phone: this.state.appts.phone,
+        email: this.state.appts.email,
+        diagnosis: this.state.appts.diagnosis,
+        medication: this.state.appts.medication
       }
     });
     console.log(this.state.appts)
@@ -64,20 +74,20 @@ export class ApptModal extends Component {
     let searchResult = searchFilter.map(item => {
       if (this.state.search !== "") {
         return (
-          <li onClick={e => this.patientSelect(e)} value={item.id}>
+          <li onClick={e => this.patientSelect(e)} value={item.id} className="list-group-item list-group-item-action">
             {item.name}
           </li>
         );
       }
     });
-   
     return (
-      <div>
+      <div className="p-5">
         <Modal
           {...this.props}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          className="p-4"
         >
           <Modal.Header closeButton onClick={this.props.hide}>
             <Modal.Title id="contained-modal-title-vcenter">
@@ -87,7 +97,7 @@ export class ApptModal extends Component {
           <Modal.Body>
             <div className="container">
               <div className="row">
-                <div className="col-8">
+                <div className="col-8 border-right">
                  {  <ApptForm
                     submitHandler={this.submitHandler}
                     search={this.state.search}
@@ -101,14 +111,12 @@ export class ApptModal extends Component {
                   }
 
                 </div>
-
-                <div className="col-4">{ searchResult}</div>
+               
+                <div className="col-4">  {searchResult[0] !== undefined ? <p className="border-bottom">SELECT A PATIENT</p> : null}{ searchResult}</div>
               </div>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.props.hide}>Close</Button>
-          </Modal.Footer>
+
         </Modal>
       </div>
     );

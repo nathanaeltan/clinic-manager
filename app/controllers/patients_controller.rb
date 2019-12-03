@@ -19,6 +19,8 @@ end
 
 def show
     @patient = Patient.find(params[:id])
+    @medication = @patient.medications
+
 end
 
 def edit

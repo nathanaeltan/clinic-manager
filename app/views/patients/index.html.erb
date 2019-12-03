@@ -1,10 +1,14 @@
-<% @patients.each do |patient| %>
+<div class="container mt-5">
+    <h1>Patient List</h1>
+    <% @patients.each do |patient| %>
 
-    <ul>
-    <li>
+    <ul class="list-group">
+    <li class="list-group-item list-group-item-action">
     <a href="/patients/<%= patient.id %>"> <%= patient.name %></a>
     
     </li>
     </ul>
   
 <% end%>
+</div>
+

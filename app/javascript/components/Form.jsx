@@ -9,6 +9,8 @@ export class Form extends Component {
                               type="text"
                               value={this.props.search}
                               onChange={this.props.updateSearch}
+                              className="input-group"
+                              placeholder="Search Patients"
                             />
                             <p>
                                Patient: {this.props.appts.name}
@@ -24,7 +26,7 @@ export class Form extends Component {
                                 ? this.props.selectTime.startStr.slice(11, 16)
                                 : ""}
                              </p>
-                            <button onClick={this.props.hide} type="submit">Add</button>
+                            <button onClick={this.props.hide} type="submit" className="btn btn-success">Add</button>
                        </form>
             </div>
         )

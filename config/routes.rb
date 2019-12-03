@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'twilio/sms'
   devise_for :users
-  
+  root 'appointments#index'
+
+  get '/myclinicmanager' => 'appointments#landing'
   get '/appointments' => 'appointments#index'
   get '/showall' => 'appointments#allAppts'
   get '/allpatients' => 'appointments#patients'

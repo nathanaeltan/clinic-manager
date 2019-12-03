@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import bootstrapPlugin from "@fullcalendar/bootstrap";
+
 import axios from "axios";
 import DisplayInfo from "./DisplayInfo"
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
@@ -55,12 +56,12 @@ export class App extends Component {
   }
   calendarComponentRef = React.createRef();
   render() {
-    console.log(this.state)
+    
     return (
-      <div className="container mt-4">
+      <div className="container mt-4" >
         
         <div className="row">
-          <div className="col-9">
+          <div className="col-8">
               <FullCalendar
               defaultView="dayGridMonth"
               header={{
@@ -96,7 +97,7 @@ export class App extends Component {
             />
           </div>
 
-          <div className="col-3">
+          <div className="col-4">
               <DisplayInfo displayinfo={this.state.displayInfo} deleteEvent={this.deleteEvent}/>
           </div>
         </div>
@@ -116,18 +117,20 @@ export class App extends Component {
       </div>
     );
   }
-  handleSubmit(patient_id, phone, name) {
+  handleSubmit(patient_id, phone, name, email, diagnosis, medication) {
     const event = {
       title: name,
-      start: this.state.selectTime.startStr
+      start: this.state.selectTime.startStr,
+      extendedProps: {appt_id:this.state.calendarEvents[this.state.calendarEvents.length - 1].extendedProps.appt_id + 1 ,phone: phone, email: email, diagnosis: diagnosis, medications: medication }
     }
+   
     const data = {
         patient_id: patient_id,
         time: this.state.selectTime.startStr,
         phone: phone
       
     }
-    console.log(data)
+   
     
     axios.post('http://localhost:3000/appts', data)
     .then(response => {
@@ -143,14 +146,13 @@ export class App extends Component {
 
 
 deleteEvent(appt_id) {
-  console.log(appt_id)
-  console.log(this.state.calendarEvents)
+  
   const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id !== appt_id)
   this.setState({calendarEvents: data})
 }
   select(start, end){
     this.setState({ modal: true, selectTime: start });
-    
+   
   };
 
 
@@ -158,7 +160,10 @@ deleteEvent(appt_id) {
 
   eventClick(calEvent, jsEvent, view, resourceObj){
     console.log(calEvent.event)
-    this.setState({displayInfo: calEvent.event})
+    const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id === calEvent.event.extendedProps.appt_id)
+    console.log(data)
+    this.setState({displayInfo: data})
+    console.log(this.state.displayInfo)
   }
   closeModal() {
     console.log("close");

@@ -1,9 +1,12 @@
 class AppointmentsController < ApplicationController
+    before_action :authenticate_user!, :except => [ :landing ]
+
     protect_from_forgery with: :null_session
     def index
     end
 
-    
+    def landing
+    end
 
     def patients
         @patients = Patient.all
@@ -11,7 +14,7 @@ class AppointmentsController < ApplicationController
         respond_to do |format| 
             format.json {
                 render :json => @patients,
-                include: []
+                :include => :medications
             }
           
             format.html
