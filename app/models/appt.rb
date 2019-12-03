@@ -18,11 +18,12 @@ class Appt < ApplicationRecord
   # )
   # Notify our appointment attendee X minutes before the appointment time
   def reminder
-    @twilio_number = '+12568587060'
-    account_sid = 'ACc9334a668f03e0dac9e34bcfed7e52c7'
-    @client = Twilio::REST::Client.new('ACc9334a668f03e0dac9e34bcfed7e52c7', 'f13e566d3db3edd674dfb624f1c964c9')
-    time_str = (Date.parse(self.time).localtime).strftime("%I:%M%p on %b. %d, %Y")
-    body = "Hi Just a reminder that you have an appointment coming up at #{time_str}."
+    @twilio_number = '+12563644368'
+    @client = Twilio::REST::Client.new(ENV["TWILIO_ACC_SID"], ENV["TWILIO_AUTH_TOKEN"])
+    
+    time_str = (Date.parse(self.time)).strftime("%I:%M%p on %b. %d, %Y")
+  
+    body = "Hi Just a reminder that you have an appointment coming up with Dr Tan's Clinic at #{time_str}."
     message = @client.messages.create(
       :from => @twilio_number,
       :to => self.phone,
@@ -31,8 +32,8 @@ class Appt < ApplicationRecord
   end
 
   def when_to_run
-    minutes_before_appointment = 10.minutes
-    time = minutes_before_appointment
+    minutes_before_appt = 10.minutes
+    time = minutes_before_appt
   end
 
   handle_asynchronously :reminder, :run_at => Proc.new { |i| i.when_to_run }
