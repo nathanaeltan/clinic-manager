@@ -9,7 +9,6 @@ export class DisplayInfo extends Component {
 
         }
     render() {
-      console.log(this.props.displayinfo)
         return (
             <div>
                 <div className="container text-center border px-4 pt-2 pb-2" style={this.props.displayinfo  ? {display:"block"} : {display:"none"}}>

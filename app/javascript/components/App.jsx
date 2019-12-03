@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import bootstrapPlugin from "@fullcalendar/bootstrap";
-
+import { Transition, animated } from 'react-spring/renderprops'
 import axios from "axios";
 import DisplayInfo from "./DisplayInfo"
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
@@ -28,7 +28,8 @@ export class App extends Component {
       modal: false,
       selectTime: "",
       selectedPatient: "",
-      displayInfo: ""
+      displayInfo: "",
+      showInfo: false
  
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,7 +57,7 @@ export class App extends Component {
   }
   calendarComponentRef = React.createRef();
   render() {
-    
+    console.log(this.state.displayInfo)
     return (
       <div className="container mt-4" >
         
@@ -96,10 +97,29 @@ export class App extends Component {
               eventDrop= {this.updatedate}
             />
           </div>
+          <div  className="col-4">
+         <Transition
+         native
+         items={this.state.displayInfo}
+         from={{ opacity: 0}}
+         enter={{ opacity: 1}}
+         leave={{ opacity: 0 }}
+         
+         >
+          {show => show && (props => (
+            <animated.div style={props}>
+            
+              
+               <DisplayInfo displayinfo={this.state.displayInfo} deleteEvent={this.deleteEvent}/>
+          
+                
+            </animated.div>
+          ))}    
 
-          <div className="col-4">
-              <DisplayInfo displayinfo={this.state.displayInfo} deleteEvent={this.deleteEvent}/>
-          </div>
+         </Transition>
+         </div>
+             
+          
         </div>
         
         
@@ -159,14 +179,17 @@ deleteEvent(appt_id) {
 
 
   eventClick(calEvent, jsEvent, view, resourceObj){
-    console.log(calEvent.event)
+    this.setState({displayInfo: ""})
     const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id === calEvent.event.extendedProps.appt_id)
-    console.log(data)
+   console.log(this.state.displayInfo)
+   setTimeout(() => {
     this.setState({displayInfo: data})
-    console.log(this.state.displayInfo)
+   }, 400);
+    
+  
   }
   closeModal() {
-    console.log("close");
+    
     this.setState({ modal: false });
   };
 
