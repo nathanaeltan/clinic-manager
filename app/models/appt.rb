@@ -10,13 +10,7 @@ class Appt < ApplicationRecord
   after_create :reminder
 
 
-  # client = Twilio::REST::Client.new('ACc9334a668f03e0dac9e34bcfed7e52c7', 'f13e566d3db3edd674dfb624f1c964c9')
-  # message = client.messages.create(
-  #   to: '+6594528617',
-  #   from: '+12568587060',
-  #   body: 'Ahoy from Twilio!'
-  # )
-  # Notify our appointment attendee X minutes before the appointment time
+
   def reminder
     @twilio_number = '+12563644368'
     @client = Twilio::REST::Client.new(ENV["TWILIO_ACC_SID"], ENV["TWILIO_AUTH_TOKEN"])
