@@ -5,14 +5,14 @@
  <p> <strong>Phone:</strong>  <%= @patient.phone %></p> 
  <p>  <strong>Email:</strong>  <%= @patient.email %></p>
  <p> <strong>Diagnosis: </strong> <%= @patient.diagnosis %></p> 
-Medication: 
+<strong>Medication:</strong>  
  <ul class="list-group ">
  <% @medication.each do |med|%>
            <li class="" style="list-style: none;"> <%= med.name %></li>
  <% end %>
  </ul>
 
- <%= link_to 'Back to Calendar', '/appointments' %>
+ <%= link_to 'Back to Calendar', '/appointments' , :class => "btn btn-primary mt-3"%>
 </div>
 
 

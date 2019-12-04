@@ -12,17 +12,17 @@ export class DisplayInfo extends Component {
     render() {
         return (
             <div>
-                <div className="container text-center border px-4 pt-2 pb-2" style={this.props.displayinfo  ? {display:"block"} : {display:"none"}}>
+                <div className="container border px-4 pt-2 pb-2" style={this.props.displayinfo  ? {display:"block"} : {display:"none"}}>
                     <p className="border-bottom"style={{fontWeight:"bold"}}> DETAILS </p> 
-                    <p>{this.props.displayinfo ? "Name: " + this.props.displayinfo[0].title: ""}</p>
-                    <p> {this.props.displayinfo ? "Email: " + this.props.displayinfo[0].extendedProps.email : ""}</p>
-                    <p> {this.props.displayinfo ? "Phone: " + this.props.displayinfo[0].extendedProps.phone : ""}</p>
-                    <p> {this.props.displayinfo ? "Diagnosis: " + this.props.displayinfo[0].extendedProps.diagnosis : ""}</p>
+                   <strong>Name: </strong><p>{this.props.displayinfo ?    this.props.displayinfo[0].title: ""}</p>
+                     <strong>Email: </strong>   <p> {this.props.displayinfo ?  this.props.displayinfo[0].extendedProps.email : ""}</p>
+                    <strong>Phone: </strong> <p> {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.phone : ""}</p>
+                     <strong>Diagnosis: </strong>   <p> {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.diagnosis : ""}</p>
                     <hr/>
-                    {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.medications.length === 0 ? "" : <p>Medication</p> : ""}
+                    {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.medications.length === 0 ? "" : <strong>Medication</strong> : ""}
                     {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.medications.map((med, i) => <li key={i}>{med.name}</li> ) : ""}
 
-                    <div className="container mt-2">
+                    <div className="container mt-2 text-center">
                         {this.props.displayinfo ? <button onClick={(e) => { swal({
                             title: "Are you sure?",
                             text: "Once deleted, you will not be able to recover this appointment",

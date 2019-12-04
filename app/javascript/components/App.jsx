@@ -57,7 +57,9 @@ export class App extends Component {
   }
   calendarComponentRef = React.createRef();
   render() {
-    console.log(this.state.displayInfo)
+    console.log( this.state.selectTime ? Date.parse(this.state.selectTime.startStr) : "")
+    console.log( this.state.selectTime ? this.state.selectTime.startStr.slice(0, 10) : "")
+    console.log( this.state.selectTime ? this.state.selectTime.startStr.slice(11, 16) : "")
     return (
       <div className="container mt-4" >
         
