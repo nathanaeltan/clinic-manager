@@ -1,29 +1,33 @@
 
 
-<div class="container text-center mt-5">
+<div class="container text-center mt-5" style="width: 50%;">
 <h1>Edit Patient</h1>
     <%= form_with scope: :patient, model: @patient, local: true do |form| %>
 
    <p>
     <%= form.label :name %><br>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, :class => "form-control" %>
   </p>
 
   <p>
     <%= form.label :phone %><br>
-    <%= form.text_field :phone %>
+    <%= form.text_field :phone, :class => "form-control" %>
   </p>
   <p>
     <%= form.label :email %><br>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, :class => "form-control" %>
   </p>
   <p>
     <%= form.label :diagnosis %><br>
-    <%= form.text_field :diagnosis %>
+    <%= form.text_field :diagnosis, :class => "form-control" %>
+  </p>
+  <p>
+    <%= form.label :Medications %> <br>
+<%= form.select :medication_ids, Medication.all.collect {|x| [x.name, x.id]}, {class: "custom-select" }, :multiple => true%>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit "Submit", :class => "btn btn-primary" %>
   </p>
 
 <% end %>

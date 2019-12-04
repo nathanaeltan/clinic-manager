@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
+import swal from 'sweetalert';
 
 export class DisplayInfo extends Component {
         constructor(){
@@ -22,8 +23,23 @@ export class DisplayInfo extends Component {
                     {this.props.displayinfo ? this.props.displayinfo[0].extendedProps.medications.map((med, i) => <li key={i}>{med.name}</li> ) : ""}
 
                     <div className="container mt-2">
-                        {this.props.displayinfo ? <button onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?'))this.handleDelete(e)}} className="btn btn-lg btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button> : ""}
-                        {this.props.displayinfo ? <a href={"patients/" + this.props.displayinfo[0].extendedProps.patient_id} className="btn btn-lg btn-warning ml-3 btn-sm"><i className="fas fa-edit "></i></a>  : null}
+                        {this.props.displayinfo ? <button onClick={(e) => { swal({
+                            title: "Are you sure?",
+                            text: "Once deleted, you will not be able to recover this appointment",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            })
+                            .then((willDelete) => {
+                            if (willDelete) {
+                                this.handleDelete(e)
+                                swal("APPOINTMENT DELETED", {
+                                icon: "success",
+                                });
+                            } 
+                            });}} className="btn btn-lg btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button> : ""}
+                        {/* {this.props.displayinfo ? <button onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?'))this.handleDelete(e)}} className="btn btn-lg btn-danger btn-sm"><i className="fas fa-trash-alt"></i></button> : ""} */}
+                        {this.props.displayinfo ? <a href={"patients/" + this.props.displayinfo[0].extendedProps.patient_id + "/edit"} className="btn btn-lg btn-warning ml-3 btn-sm"><i className="fas fa-edit "></i></a>  : null}
                     </div>
                     
 

@@ -29,7 +29,7 @@ end
 
 def update
     @patient = Patient.find(params[:id])
-  
+    @medication = @patient.medications
     @patient.update(patient_params)
     redirect_to @patient
   end

@@ -8,7 +8,7 @@ import bootstrapPlugin from "@fullcalendar/bootstrap";
 import { Transition, animated } from 'react-spring/renderprops'
 import axios from "axios";
 import DisplayInfo from "./DisplayInfo"
-import { Modal, Button, Row, Col, Form } from "react-bootstrap";
+import swal from 'sweetalert';
 import ApptModal from "./ApptModal";
 import "./main.scss";
 
@@ -159,6 +159,12 @@ export class App extends Component {
      
       this.setState({calendarEvents: [...this.state.calendarEvents, event]})
       console.log(this.state.calendarEvents)
+      swal({
+        title: "Appointment Added",
+        text: "Confirmation SMS sent to Patient",
+        icon: "success",
+        button: "Close",
+      });
     })
     .catch(error => console.log(error))
     
