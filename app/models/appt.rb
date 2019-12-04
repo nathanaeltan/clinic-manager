@@ -22,6 +22,7 @@ class Appt < ApplicationRecord
       :from => @twilio_number,
       :to => self.phone,
       :body => body,
+      :statusCallback =>  "https://myclinicmanager.herokuapp.com/appointments"
     )
   end
 
