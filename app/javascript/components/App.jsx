@@ -81,6 +81,7 @@ export class App extends Component {
               eventLimit="true"
               themeSystem="standard"
               eventColor="#D7F0F7"
+              aspectRatio="1"
               plugins={[
                 dayGridPlugin,
                 timeGridPlugin,
@@ -101,9 +102,9 @@ export class App extends Component {
          <Transition
          native
          items={this.state.displayInfo}
-         from={{ opacity: 0}}
-         enter={{ opacity: 1}}
-         leave={{ opacity: 0 }}
+         from={{ opacity: 0, marginTop: 500}}
+         enter={{ opacity: 1, marginTop: 0}}
+         leave={{ opacity: 0, marginTop: 500 }}
          
          >
           {show => show && (props => (
@@ -168,7 +169,7 @@ export class App extends Component {
 deleteEvent(appt_id) {
   
   const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id !== appt_id)
-  this.setState({calendarEvents: data})
+  this.setState({calendarEvents: data, displayInfo: ""})
 }
   select(start, end){
     this.setState({ modal: true, selectTime: start });
@@ -181,10 +182,10 @@ deleteEvent(appt_id) {
   eventClick(calEvent, jsEvent, view, resourceObj){
     this.setState({displayInfo: ""})
     const data = this.state.calendarEvents.filter(i => i.extendedProps.appt_id === calEvent.event.extendedProps.appt_id)
-   console.log(this.state.displayInfo)
+   console.log(calEvent)
    setTimeout(() => {
     this.setState({displayInfo: data})
-   }, 400);
+   }, 300);
     
   
   }
