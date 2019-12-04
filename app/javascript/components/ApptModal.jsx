@@ -26,7 +26,7 @@ export class ApptModal extends Component {
 
     );
       this.props.hide
-
+      e.target.value = ""
   };
 
 
