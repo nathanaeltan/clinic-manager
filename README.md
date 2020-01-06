@@ -33,6 +33,7 @@
 - Run Bundle Install
 - Run db:create, db:migrate
 - Run Rails server 
+- Run Rails jobs:work
 
 
 ## User Experience
